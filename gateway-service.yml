@@ -59,7 +59,7 @@ management:
       exposure:
         include: health, info, prometheus  # ✅ 헬스체크 및 메트릭 노출
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICE_URL}  # ✅ Eureka 서비스 등록
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${EUREKA_CLIENT_SERVICE_URL}  # ✅ Eureka 서비스 등록
