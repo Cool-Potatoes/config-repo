@@ -1,0 +1,29 @@
+server:
+  port: 8150
+
+spring:
+  application:
+    name: flight-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${FLIGHT_DB_URL}
+    username: ${FLIGHT_DB_USERNAME}
+    password: ${FLIGHT_DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    zipkin:
+      endpoint: http://zipkin:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL}
