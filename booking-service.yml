@@ -2,31 +2,35 @@ server:
   port: 8120
 
 spring:
-#  application:
-#    name: booking-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${BOOKING_DB_URL}
-    username: ${BOOKING_DB_USERNAME}
-    password: ${BOOKING_DB_PASSWORD}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/flight_booking?currentSchema=booking_service}  # 로컬 기본값, Docker에서 postgres 사용
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
       username: ${REDIS_USERNAME}
       password: ${REDIS_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-#      auto-offset-reset: latest # 치명적일 수 있는...
 
 resilience4j:
-  circuitbreaker: # rollback?
+  circuitbreaker:
     configs:
       default:
         registerHealthIndicator: true
@@ -44,13 +48,10 @@ management:
     sampling:
       probability: 1.0
     zipkin:
-      endpoint: http://zipkin:9411/api/v2/spans
+      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
   endpoints:
     web:
       exposure:
         include: health, info, prometheus
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: ${EUREKA_CLIENT_SERVICE_URL}
+

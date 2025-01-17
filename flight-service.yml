@@ -6,24 +6,28 @@ spring:
     name: flight-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${FLIGHT_DB_URL}
-    username: ${FLIGHT_DB_USERNAME}
-    password: ${FLIGHT_DB_PASSWORD}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/flight_booking?currentSchema=flight_service}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
 
 management:
   tracing:
     sampling:
       probability: 1.0
     zipkin:
-      endpoint: http://zipkin:9411/api/v2/spans
+      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
   endpoints:
     web:
       exposure:
         include: health, info, prometheus
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICE_URL}
+
