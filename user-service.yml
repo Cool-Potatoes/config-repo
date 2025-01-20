@@ -36,8 +36,8 @@ spring:
 # 🔐 JWT 설정 추가
 service:
   jwt:
-    access-expiration: 86400000
-    refresh-expiration: 604800000
+    access-token-expiration: 86400000 # 1일
+    refresh-token-expiration: 604800000 # 7일
     secret-key: ${SECRET_KEY}
 
 resilience4j:
