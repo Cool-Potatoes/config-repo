@@ -48,6 +48,8 @@ management:
     export:
       prometheus:
         enabled: true  # Prometheus 활성화
-
+retry-payment:
+  scheduler:
+    thread-pool: 5
 
 
