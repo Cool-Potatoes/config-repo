@@ -1,17 +1,6 @@
 server:
   port: 8100
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0  # 100% 샘플링
-    enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: tracing  # Actuator에서 Tracing 노출
-
-
 spring:
   application:
     name: user-service
@@ -64,7 +53,16 @@ resilience4j:
         failureRateThreshold: 50
         permittedNumberOfCallsInHalfOpenState: 3
         waitDurationInOpenState: 20s
-zipkin:
-  base-url: http://zipkin:9411  # Docker Compose에서 Zipkin 컨테이너와 통신
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus  # Prometheus 메트릭 노출
+  metrics:
+    export:
+      prometheus:
+        enabled: true  # Prometheus 활성화
+
 
 
