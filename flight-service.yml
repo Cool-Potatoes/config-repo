@@ -26,15 +26,15 @@ spring:
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-    zipkin:
-      endpoint: "http://zipkin:9411/api/v2/spans"
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus
+#management:
+#  tracing:
+#    sampling:
+#      probability: 1.0
+#    zipkin:
+#      endpoint: "http://zipkin:9411/api/v2/spans"
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health, info, prometheus
 
 
