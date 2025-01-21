@@ -1,6 +1,17 @@
 server:
   port: 8140
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # 100% 샘플링
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: tracing  # Actuator에서 Tracing 노출
+
+
 spring:
   application:
     name: ticket-service
@@ -46,15 +57,7 @@ resilience4j:
         failureRateThreshold: 50
         permittedNumberOfCallsInHalfOpenState: 2
         waitDurationInOpenState: 10s
+zipkin:
+  base-url: http://zipkin:9411  # Docker Compose에서 Zipkin 컨테이너와 통신
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0
-#    zipkin:
-#      endpoint: "http://zipkin:9411/api/v2/spans"
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, info, prometheus
 

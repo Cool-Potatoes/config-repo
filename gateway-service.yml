@@ -1,6 +1,17 @@
 server:
   port: 8080
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # 100% 샘플링
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: tracing  # Actuator에서 Tracing 노출
+
+
 spring:
   main:
     web-application-type: reactive  # Spring 애플리케이션이 리액티브 웹 애플리케이션으로 설정됨
@@ -49,16 +60,9 @@ spring:
       discovery:
         locator:
           enabled: true  # ✅ 서비스 자동 탐색 활성화
+zipkin:
+  base-url: http://zipkin:9411  # Docker Compose에서 Zipkin 컨테이너와 통신
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0  # ✅ 모든 요청 추적
-#    zipkin:
-#      endpoint: "http://zipkin:9411/api/v2/spans"  # ✅ Zipkin 연결
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, info, prometheus  # ✅ 헬스체크 및 메트릭 노출
+
 
 
